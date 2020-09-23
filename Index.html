@@ -26,14 +26,15 @@ var x = setInterval(function() {
   var distance = countDownDate - now;
     
   // Time calculations for days, hours, minutes and seconds
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var months = Math.floor(distance / (1000 * 60 * 60 * 24 * 31));
+  var days = Math.floor(distance % (1000 * 60 * 60 * 24 * 31) / (1000 * 60 * 60 * 24));
   var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     
   // Output the result in an element with id="demo"
-  document.getElementById("demo").textContent = "Erste Prüfung (Deutsch 5std)" + days + "d " + hours + "h "
-  + minutes + "m " + seconds + "s ";
+  document.getElementById("demo").textContent = "Erste Prüfung (Deutsch 5std)  " + months + "monate " + days + "Tage " + hours + "Stunden "
+  + minutes + "Minuten " + seconds + "Sekunden ";
     
   // If the count down is over, write some text 
   if (distance < 0) {
