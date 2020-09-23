@@ -1,5 +1,10 @@
 body {
   background-color: lightblue;
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  padding: 10px;
+
 }
 
 h1 {
@@ -7,8 +12,12 @@ h1 {
   margin-left: 20px;
 }
 
-p.cd {
+p {
   text-align: center;
-  font-size: 60px;
+  font-size: 40px;
   margin-top: 0px;
+  left: 0%;
+  right: 15%;
+  padding: 10px;
+
 }
