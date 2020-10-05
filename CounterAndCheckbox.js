@@ -70,15 +70,15 @@ function countDown(countDownDate, counterID) {
         // Output the result in an element with id=textID
         document.getElementById(counterID).textContent =
             months +
-            "monate " +
+            " monate " +
             days +
-            "Tage " +
+            " Tage " +
             hours +
-            "Stunden " +
+            " Stunden " +
             minutes +
-            "Minuten " +
+            " Minuten " +
             seconds +
-            "Sekunden ";
+            " Sekunden ";
 
         // If the countdown is over, show it
         if (duration < 0) {
