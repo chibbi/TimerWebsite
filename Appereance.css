@@ -1,31 +1,52 @@
-body {
-  background-color: lightblue;
-  position: absolute;
-  left: 15%;
-  right: 15%;
-  padding: 10px;
-
-}
-
 h1 {
   color: navy;
   margin-left: 20px;
 }
 
+pre {
+  align-items: relative;
+  margin-top: 50px;
+  border: 3px solid rgb(97, 88, 88);
+}
+
 p {
-  text-align: center;
+  text-align: left;
   font-size: 28px;
   margin-top: 3px;
   margin-bottom: 5px;
 
 }
 
+/* Content der Seite (neben der Navbar)  */
+.mainContent {
+  float: right;
+  margin-right: 1%;
+  width: 75%;
+
+}
+
+/* Abicountdown Boxes  */
 .cdc {
   align-self: center;
   margin-top: 1%;
   border: 3px solid rgb(97, 88, 88);
 }
 
+#dc {
+  background-color: rgb(149, 165, 244);
+}
+#phc {
+  background-color: #a29fcc;
+}
+#wc {
+  background-color: #d9a6db;
+}
+#ec {background-color: #f7c09e;}
+#chc {background-color: #f4e866;}
+#mc {background-color: #f4705f;}
+
+
+/* DropDown CheckBox */
 .multiselect {
   width: 330px;
   position: relative;
@@ -61,4 +82,37 @@ p {
 
 #checkboxes label:hover {
   background-color: #1e90ff;
+}
+
+/* NAVBAR */
+.navBar {
+  width: 20%;
+  background-color: #f1f1f1;
+  height: 100%;
+  position: fixed;
+  overflow: auto;
+  float: left;
+}
+
+.navBar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navBar li a {
+  display: block;
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.navBar li a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.navBar li a:hover:not(.active) {
+  background-color: #555;
+  color: white;
 }
