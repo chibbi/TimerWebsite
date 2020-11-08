@@ -15,22 +15,27 @@ function loadCheckboxes() {
     var cookies = document.cookie;
     console.log(cookies);
     console.log(cookies.split(" "));
+    // this section loads every cookie for every timer
     loadCheckbox("vid");
     loadCheckbox("viw");
     loadCheckbox("viph");
     loadCheckbox("vie");
     loadCheckbox("vich");
     loadCheckbox("vim");
-    //finished loading
+    // finished loading
 }
 
 function loadCheckbox(visibilityBox) {
+    // basically searches the cookie string after the given name and if it is
+    // false
     if (document.cookie.includes("checkBox_" + visibilityBox + "=false")) {
         document.getElementById(visibilityBox).checked = false;
         console.log(visibilityBox + " is FALSE");
+    // or true
     } else if (document.cookie.includes("checkBox_" + visibilityBox + "=true")) {
         document.getElementById(visibilityBox).checked = true;
         console.log(visibilityBox + " IS true");
+    // if it is neither false nor true is is made true by default
     } else {
         document.getElementById(visibilityBox).checked = true;
         console.log(visibilityBox + " MADE true");
@@ -43,11 +48,11 @@ function checkVisibility(counterID) {
         // Checks if the given Text and Counter should be visible
         if (document.getElementById("vi" + counterID).checked == true) {
             // if yes, it will show them
-            document.getElementById(counterID + "c").style.display  = "block";
+            document.getElementById(counterID + "c").style.display = "block";
             document.cookie = "checkBox_" + "vi" + counterID + "=true;expires=Mon, 04 Jul 2022 22:44:25 UTC";
         } else {
             // if not, it will not show them
-            document.getElementById(counterID + "c").style.display  = "none";
+            document.getElementById(counterID + "c").style.display = "none";
             document.cookie = "checkBox_" + "vi" + counterID + "=false;expires=Mon, 04 Jul 2022 22:44:25 UTC";
         }
     }, 1000);
@@ -70,13 +75,13 @@ function countDown(countDownDate, counterID) {
         // Output the result in an element with id=textID
         document.getElementById(counterID).textContent =
             months +
-            " monate " +
+            " Monate, " +
             days +
-            " Tage " +
+            " Tage, " +
             hours +
-            " Stunden " +
+            " Stunden, " +
             minutes +
-            " Minuten " +
+            " Minuten, " +
             seconds +
             " Sekunden ";
 
@@ -87,12 +92,14 @@ function countDown(countDownDate, counterID) {
         }
     }, 1000);
 }
+// basically checks if the given timer should be shown
 checkVisibility("d");
 checkVisibility("ph");
 checkVisibility("w");
 checkVisibility("e");
 checkVisibility("ch");
 checkVisibility("m");
+// creates the countdown for every timer
 countDown(new Date("May 4, 2021 9:00:00").getTime(), "d");
 countDown(new Date("May 6, 2021 9:00:00").getTime(), "ph");
 countDown(new Date("May 7, 2021 9:00:00").getTime(), "w");
