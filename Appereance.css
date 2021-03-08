@@ -17,9 +17,9 @@ p {
 
 }
 
-/* Content der Seite (neben der Navbar)  */
+/* Content der Seite */
 .mainContent {
-  float: right;
+  float: center;
   margin-right: 1%;
   width: 75%;
 
