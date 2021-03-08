@@ -1,9 +1,12 @@
+// written by chibbi
 var expanded = false;
+var red = "white";
+var green = "#8FBC8F";
 
 function showCheckboxes() {
     var checkboxes = document.getElementById("checkboxes");
     if (!expanded) {
-        checkboxes.style.display = "block";
+        checkboxes.style.display = "flex";
         expanded = true;
     } else {
         checkboxes.style.display = "none";
@@ -13,49 +16,50 @@ function showCheckboxes() {
 
 function loadCheckboxes() {
     var cookies = document.cookie;
-    console.log(cookies);
-    console.log(cookies.split(" "));
     // this section loads every cookie for every timer
-    loadCheckbox("vid");
-    loadCheckbox("viw");
-    loadCheckbox("viph");
-    loadCheckbox("vie");
-    loadCheckbox("vich");
-    loadCheckbox("vim");
+    loadCheckbox("d");
+    loadCheckbox("w");
+    loadCheckbox("ph");
+    loadCheckbox("e");
+    loadCheckbox("ch");
+    loadCheckbox("m");
     // finished loading
 }
 
 function loadCheckbox(visibilityBox) {
     // basically searches the cookie string after the given name and if it is
     // false
+    buttonID = "vi" + visibilityBox;
+    visibilityBox = visibilityBox + "c";
     if (document.cookie.includes("checkBox_" + visibilityBox + "=false")) {
-        document.getElementById(visibilityBox).checked = false;
-        console.log(visibilityBox + " is FALSE");
-    // or true
+        document.getElementById(visibilityBox).style.display = "none";
+        document.getElementById(buttonID).style.backgroundColor = red;
+        // or true
     } else if (document.cookie.includes("checkBox_" + visibilityBox + "=true")) {
-        document.getElementById(visibilityBox).checked = true;
-        console.log(visibilityBox + " IS true");
-    // if it is neither false nor true is is made true by default
+        document.getElementById(visibilityBox).style.display = "block";
+        document.getElementById(buttonID).style.backgroundColor = green;
+        // if it is neither false nor true is is made true by default
     } else {
-        document.getElementById(visibilityBox).checked = true;
-        console.log(visibilityBox + " MADE true");
+        document.getElementById(visibilityBox).style.display = "block";
+        document.cookie = "checkBox_" + visibilityBox + "=true;expires=Mon, 04 Jul 2022 22:44:25 UTC";
     }
 }
 
 function checkVisibility(counterID) {
-    // Update the count down every 1 second
-    var x = setInterval(function () {
-        // Checks if the given Text and Counter should be visible
-        if (document.getElementById("vi" + counterID).checked == true) {
-            // if yes, it will show them
-            document.getElementById(counterID + "c").style.display = "block";
-            document.cookie = "checkBox_" + "vi" + counterID + "=true;expires=Mon, 04 Jul 2022 22:44:25 UTC";
-        } else {
-            // if not, it will not show them
-            document.getElementById(counterID + "c").style.display = "none";
-            document.cookie = "checkBox_" + "vi" + counterID + "=false;expires=Mon, 04 Jul 2022 22:44:25 UTC";
-        }
-    }, 1000);
+    // Checks if the given Text and Counter should be visible
+    buttonID = "vi" + counterID;
+    counterID = counterID + "c";
+    if (document.getElementById(counterID).style.display == "none") {
+        // if yes, it will show them
+        document.getElementById(counterID).style.display = "block";
+        document.getElementById(buttonID).style.backgroundColor = green;
+        document.cookie = "checkBox_" + counterID + "=true;expires=Mon, 04 Jul 2022 22:44:25 UTC";
+    } else {
+        // if not, it will not show them
+        document.getElementById(counterID).style.display = "none";
+        document.getElementById(buttonID).style.backgroundColor = red;
+        document.cookie = "checkBox_" + counterID + "=false;expires=Mon, 04 Jul 2022 22:44:25 UTC";
+    }
 }
 
 function countDown(countDownDate, counterID) {
@@ -92,13 +96,6 @@ function countDown(countDownDate, counterID) {
         }
     }, 1000);
 }
-// basically checks if the given timer should be shown
-checkVisibility("d");
-checkVisibility("ph");
-checkVisibility("w");
-checkVisibility("e");
-checkVisibility("ch");
-checkVisibility("m");
 // creates the countdown for every timer
 countDown(new Date("May 4, 2021 9:00:00").getTime(), "d");
 countDown(new Date("May 6, 2021 9:00:00").getTime(), "ph");
@@ -110,10 +107,9 @@ countDown(new Date("May 17, 2021 9:00:00").getTime(), "m");
 
 // How to create new Dates:
 // 1. create new <p></p> Texts (with ids)
-// 2. create new Checkbox in DropDown Select Menu
-// 3. create new checkVisibility(...)
-// 4. create new countDown(...)
-// 5. create new loadCheckBox(...) in loadCheckBoxes()
+// 2. create new Button in DropDown Select Menu
+// 3. create new countDown(...)
+// 4. create new loadCheckBox(...) in loadCheckBoxes()
 
 // How to change from one Abi to the next
 // 1. Change every Date for every Prüfung to the new Date
