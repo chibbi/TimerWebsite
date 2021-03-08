@@ -1,62 +1,77 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>Page Title</title>
-  <link rel="stylesheet" href="Appereance.css">
-    <meta name="description" content="Countdown for Abitur 2021">
-  <meta name="author" content="chibbi">
+  <meta charset="UTF-8" />
+
+  <title>Abi Countdown</title>
+  <link rel="stylesheet" href="css/default.css" />
+  <link rel="stylesheet" href="css/cddefault.css" />
+  <meta name="description" content="Official Website of Raninninn" />
+  <meta name="author" content="chibbi" />
+  <script data-ad-client="ca-pub-9021480086144976" async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script src="js/siteLoader.js"></script>
 </head>
 
 <body onload="loadCheckboxes()">
-  <script src="CounterAndCheckbox.js"></script>
-  <div class="multiselect">
-    <div class="selectBox" onclick="showCheckboxes()">
-      <select>
-        <option>Wähle sichtbare Prüfungen aus</option>
-      </select>
-      <div class="overSelect"></div>
-    </div>
-    <div id="checkboxes">
-      <label for="one">
-        <input type="checkbox" id="vid" />Deutsch</label>
-      <label for="two">
-        <input type="checkbox" id="viph" />Physik</label>
-      <label for="three">
-        <input type="checkbox" id="viw" />Wirtschaft</label>
-      <label for="three">
-        <input type="checkbox" id="vie" />Englisch</label>
-      <label for="three">
-        <input type="checkbox" id="vich" />Chemie</label>
-      <label for="three">
-        <input type="checkbox" id="vim" />Mathe</label>
+  <div class="navBar">
+    <button class="icon" onclick="mobileNavbar();">
+      <i class="fa fa-bars"></i>
+    </button>
+    <div id="navBardiv">
+      <ul id="navBar"></ul>
     </div>
   </div>
-  <div class="cdc" id="dc">
-    <p class="cdt">Deutsch Prüfung in:</p>
-    <p class="cd" id="d"></p>
+
+  <div class="mainContent">
+    <div class="multiselect">
+      <div class="selectBox" onclick="showCheckboxes()">
+        <select>
+          <option>Wähle sichtbare Prüfungen aus</option>
+        </select>
+        <div class="overSelect"></div>
+      </div>
+      <div id="checkboxes">
+        <input type="button" value="Deutsch" onclick="checkVisibility('d')" id="vid" />
+        <input type="button" value="Physik" onclick="checkVisibility('ph')" id="viph" />
+        <input type="button" value="Wirtschaft" onclick="checkVisibility('w')" id="viw" />
+        <input type="button" value="Englisch" onclick="checkVisibility('e')" id="vie" />
+        <input type="button" value="Chemie" onclick="checkVisibility('ch')" id="vich" />
+        <input type="button" value="Mathe" onclick="checkVisibility('m')" id="vim" />
+      </div>
+    </div>
+    <div class="cdc" id="dc">
+      <p class="cdt">Deutsch Prüfung in:</p>
+      <p class="cd" id="d"></p>
+    </div>
+    <div class="cdc" id="phc">
+      <p class="cdt">Physik Prüfung in:</p>
+      <p class="cd" id="ph"></p>
+    </div>
+    <div class="cdc" id="wc">
+      <p class="cdt">Wirtschaft Prüfung in:</p>
+      <p class="cd" id="w"></p>
+    </div>
+    <div class="cdc" id="ec">
+      <p class="cdt">Englisch Prüfung in:</p>
+      <p class="cd" id="e"></p>
+    </div>
+    <div class="cdc" id="chc">
+      <p class="cdt">Chemie Prüfung in:</p>
+      <p class="cd" id="ch"></p>
+    </div>
+    <div class="cdc" id="mc">
+      <p class="cdt">Mathe Prüfung in:</p>
+      <p class="cd" id="m"></p>
+    </div>
   </div>
-  <div class="cdc" id="phc">
-    <p class="cdt">Physik Prüfung in:</p>
-    <p class="cd" id="ph"></p>
-  </div>
-  <div class="cdc" id="wc">
-    <p class="cdt">Wirtschaft Prüfung in:</p>
-    <p class="cd" id="w"></p>
-  </div>
-  <div class="cdc" id="ec">
-    <p class="cdt">Englisch Prüfung in:</p>
-    <p class="cd" id="e"></p>
-  </div>
-  <div class="cdc" id="chc">
-    <p class="cdt">Chemie Prüfung in:</p>
-    <p class="cd" id="ch"></p>
-  </div>
-  <div class="cdc" id="mc">
-    <p class="cdt">Mathe Prüfung in:</p>
-    <p class="cd" id="m"></p>
-  </div>
+  <script src="js/counterAndCheckbox.js"></script>
+  <script>
+    loadNavbar();
+      // loadMaincontent()
+  </script>
 </body>
 
 </html>
