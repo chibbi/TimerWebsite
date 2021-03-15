@@ -35,6 +35,7 @@
             loadCheckbox("e");
             loadCheckbox("ch");
             loadCheckbox("m");
+            loadCheckbox("sch");
             // finished loading
         }
 
@@ -81,20 +82,15 @@
                 var now = new Date().getTime();
                 var then = new Date(countDownDate);
                 var duration = countDownDate - now;
-
-                var months = Math.floor(duration / (1000 * 60 * 60 * 24 * 31));
-                var days = Math.floor((duration % (1000 * 60 * 60 * 24 * 31)) / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((duration % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((duration % (1000 * 60)) / 1000);
+                var durationDate = new Date(duration);
 
                 // Output the result in an element with id=textID
                 document.getElementById(counterID).textContent =
-                    months + " Monate, " +
-                    days + " Tage, " +
-                    hours + " Stunden, " +
-                    minutes + " Minuten, " +
-                    seconds + " Sekunden " + " - (" +
+                    durationDate.getMonth() + " Monate, " +
+                    durationDate.getDate() + " Tage, " +
+                    durationDate.getHours() + " Stunden, " +
+                    durationDate.getMinutes() + " Minuten, " +
+                    durationDate.getSeconds() + " Sekunden " + " - (" +
                     then.getDate() + "." +
                     (then.getMonth() + 1) + "." +
                     then.getFullYear() + " " +
@@ -106,7 +102,7 @@
                     clearInterval(x);
                     document.getElementById(counterID).textContent = "Prüfungstart war bereits.";
                 }
-            }, 1000);
+            }, 500);
         }
         // creates the countdown for every timer
         countDown(new Date("May 4, 2021 9:00:00").getTime(), "d");
@@ -124,7 +120,7 @@
 // 3. create new countDown(...)
 // 4. create new loadCheckBox(...) in loadCheckBoxes()
 // TODO: create a function which automatically does all of the above 
-        
+
 // How to change from one Abi to the next
 // 1. Change every Date for every Prüfung to the new Date
 // 2. Maybe change/increase ExpiringDate
