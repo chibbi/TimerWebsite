@@ -90,16 +90,16 @@ function countDown(countDownDate, counterID) {
 
         // Output the result in an element with id=textID
         document.getElementById(counterID).textContent =
-            months +
-            " Monate, " +
-            days +
-            " Tage, " +
-            hours +
-            " Stunden, " +
-            minutes +
-            " Minuten, " +
-            seconds +
-            " Sekunden " + " - (" + then.substring(0,then.length - 24) + ")";
+                    months + " Monate, " +
+                    days + " Tage, " +
+                    hours + " Stunden, " +
+                    minutes + " Minuten, " +
+                    seconds + " Sekunden " + " - (" +
+                    then.getDate() + "." +
+                    then.getMonth() + "." +
+                    then.getFullYear() + " " +
+                    (then.getHours() < 10 ? '0' : '') + then.getHours() + ":" +
+                    (then.getMinutes() < 10 ? '0' : '') + then.getMinutes() + ")";
 
         // If the countdown is over, show it
         if (duration < 0) {
