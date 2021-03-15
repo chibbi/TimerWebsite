@@ -99,7 +99,7 @@ function countDown(countDownDate, counterID) {
             minutes +
             " Minuten, " +
             seconds +
-            " Sekunden " + " - (" + countDownDate + ")";
+            " Sekunden " + " - (" + countDownDate.substring(0, str.length - 3); + ")";
 
         // If the countdown is over, show it
         if (duration < 0) {
