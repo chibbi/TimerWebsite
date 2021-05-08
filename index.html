@@ -87,7 +87,7 @@
                 // Output the result in an element with id=textID
                 document.getElementById(counterID).textContent =
                     durationDate.getMonth() + " Monate, " +
-                    durationDate.getDate() + " Tage, " +
+                    (durationDate.getDate() - 1) + " Tage, " +
                     durationDate.getHours() + " Stunden, " +
                     durationDate.getMinutes() + " Minuten, " +
                     durationDate.getSeconds() + " Sekunden " + " - (" +
