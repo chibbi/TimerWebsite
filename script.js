@@ -110,8 +110,8 @@ function loadCountdowns() {
 
 
 // How to create new Dates:
-// 1. create new countDown(...)
-// 2. create new loadCheckBox(...) in loadCheckBoxes()
+// 1. create a new "countDown(...)" // line 109
+// 2. create a new "loadCheckBox(...)" in loadCheckBoxes() // line 26
 // 3. create a new thingy in the css file (not necessary)
 // TODO: create a function which automatically does all of the above 
 
