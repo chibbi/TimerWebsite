@@ -1,10 +1,22 @@
 // written by chibbi
-var expanded = false;
-var red = "white";
-var green = "#8FBC8F";
+const red = "white";
+const green = "#8FBC8F";
+const timerList = {
+    //"d": { "name": "Deutsch", "date": "May 4, 2021 9:00:00", "background": "rgb(149, 165, 244)" },
+    //"w": { "name": "Wirtschaft", "date": "May 6, 2021 9:00:00", "background": "#a29fcc" },
+    //"ph": { "name": "Physik", "date": "May 7, 2021 9:00:00", "background": "#d9a6db" },
+    //"e": { "name": "Englisch", "date": "May 10, 2021 9:00:00", "background": "#f7c09e" },
+    //"ch": { "name": "Chemie", "date": "May 11, 2021 9:00:00", "background": "#f4e866" },
+    //"m": { "name": "Mathe", "date": "May 17, 2021 9:00:00", "background": "#f4705f" },
+    "it": { "name": "IT", "date": "Jun 29, 2021 11:30:00", "background": "#a29fcc" },
+    "gb": { "name": "GB", "date": "Jul 4, 2021 1:00:00", "background": "#d9a6db" },
+    "as": { "name": "AS", "date": "Sep 6, 2021 8:00:00", "background": "#f4e866" },
+    "ls": { "name": "LS", "date": "Oct 4, 2021 13:00:00", "background": "#f7c09e" },
+}
 
+let expanded = false;
 function showCheckboxes() {
-    var checkboxes = document.getElementById("checkboxes");
+    const checkboxes = document.getElementById("checkboxes");
     if (!expanded) {
         checkboxes.style.display = "flex";
         expanded = true;
@@ -14,23 +26,25 @@ function showCheckboxes() {
     }
 }
 
-function loadCheckboxes() {
-    var cookies = document.cookie;
-    // this section loads every cookie for every timer
-    loadCheckbox("d");
-    loadCheckbox("w");
-    loadCheckbox("ph");
-    loadCheckbox("e");
-    loadCheckbox("ch");
-    loadCheckbox("m");
-    // finished loading
+function loadCountdowns() {
+    // creates the countdown for every timer
+    for (const time in timerList)
+        countDown(time);
+
 }
 
-function loadCheckbox(visibilityBox) {
+
+function loadCheckboxes() {
+    // this section loads every cookie for every timer
+    for (const id in timerList)
+        loadCheckbox(id);
+}
+
+function loadCheckbox(visibilityBoxName) {
+    const buttonID = "vi" + visibilityBoxName;
+    const visibilityBox = visibilityBoxName + "c";
     // basically searches the cookie string after the given name and if it is
     // false
-    buttonID = "vi" + visibilityBox;
-    visibilityBox = visibilityBox + "c";
     if (document.cookie.includes("checkBox_" + visibilityBox + "=false")) {
         document.getElementById(visibilityBox).style.display = "none";
         document.getElementById(buttonID).style.backgroundColor = red;
@@ -38,17 +52,18 @@ function loadCheckbox(visibilityBox) {
     } else if (document.cookie.includes("checkBox_" + visibilityBox + "=true")) {
         document.getElementById(visibilityBox).style.display = "block";
         document.getElementById(buttonID).style.backgroundColor = green;
-        // if it is neither false nor true is is made true by default
+        // if it is neither false nor true, it is made true by default
     } else {
         document.getElementById(visibilityBox).style.display = "block";
+        document.getElementById(buttonID).style.backgroundColor = green;
         document.cookie = "checkBox_" + visibilityBox + "=true;expires=Mon, 04 Jul 2022 22:44:25 UTC";
     }
 }
 
-function checkVisibility(counterID) {
+function checkVisibility(counterName) {
     // Checks if the given Text and Counter should be visible
-    buttonID = "vi" + counterID;
-    counterID = counterID + "c";
+    const buttonID = "vi" + counterName;
+    const counterID = counterName + "c";
     if (document.getElementById(counterID).style.display == "none") {
         // if yes, it will show them
         document.getElementById(counterID).style.display = "block";
@@ -62,26 +77,27 @@ function checkVisibility(counterID) {
     }
 }
 
-function countDown(countDownDate, counterID, counterName) {
-    let contentdiv = document.getElementById("content");
+function countDown(counterID) {
+    const countDownDate = new Date(timerList[counterID].date).getTime();
+    const counterName = timerList[counterID].name;
+    const contentdiv = document.getElementById("content");
     contentdiv.innerHTML += '<div class="cdc" id="' + counterID + 'c">' +
         '<p class="cdt">' + counterName + ' Prüfung in:</p>' +
         '<p class="cd" id="' + counterID + '"></p>' +
         '</div>';
-    let checkboxesdiv = document.getElementById("checkboxes");
-    checkboxesdiv.innerHTML += '<input type="button" value="' + counterName + '"' +
+    const checkboxesdiv = document.getElementById("checkboxes");
+    checkboxesdiv.innerHTML += '<input type="button" value="' + counterID + '"' +
         'onclick="checkVisibility(\'' + counterID + '\')" id="vi' + counterID + '" />';
     // Update the count down every 1 second
-    var x = setInterval(function () {
+    const x = setInterval(function () {
         // Get current date and time
         var now = new Date().getTime();
         var then = new Date(countDownDate);
         var duration = countDownDate - now;
         var durationDate = new Date(duration);
-
         // Output the result in an element with id=textID
         document.getElementById(counterID).textContent =
-            (durationDate.getDate() - 1) + " Tage, " +
+            ((duration / (1000 * 60 * 60 * 24))).toString().split(".")[0] + " Tage, " +
             (durationDate.getHours() - 1) + " Stunden, " +
             durationDate.getMinutes() + " Minuten, " +
             durationDate.getSeconds() + " Sekunden " + " - (" +
@@ -97,23 +113,11 @@ function countDown(countDownDate, counterID, counterName) {
             document.getElementById(counterID).textContent = "Prüfungstart war bereits.";
         }
     }, 500);
+    document.getElementById(counterID + "c").style.backgroundColor = timerList[counterID].background;
 }
-// creates the countdown for every timer
-function loadCountdowns() {
-    countDown(new Date("May 4, 2021 9:00:00").getTime(), "d", "Deutsch");
-    countDown(new Date("May 6, 2021 9:00:00").getTime(), "ph", "Physik");
-    countDown(new Date("May 7, 2021 9:00:00").getTime(), "w", "Wirtschaft");
-    countDown(new Date("May 10, 2021 9:00:00").getTime(), "e", "Englisch");
-    countDown(new Date("May 11, 2021 9:00:00").getTime(), "ch", "Chemie");
-    countDown(new Date("May 17, 2021 9:00:00").getTime(), "m", "Mathe");
-}
-
 
 // How to create new Dates:
-// 1. create a new "countDown(...)" // line 109
-// 2. create a new "loadCheckBox(...)" in loadCheckBoxes() // line 26
-// 3. create a new thingy in the css file (not necessary)
-// TODO: create a function which automatically does all of the above 
+// 1. create a new Object in "timerList" // line 4
 
 // How to change from one Abi to the next
 // 1. Change every Date for every Prüfung to the new Date
