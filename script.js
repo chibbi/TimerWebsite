@@ -11,7 +11,7 @@ const timerList = {
     "it": { "name": "IT", "date": "Jun 29, 2021 11:30:00", "background": "#a29fcc" },
     "gb": { "name": "GB", "date": "Jul 4, 2021 1:00:00", "background": "#d9a6db" },
     "as": { "name": "AS", "date": "Sep 6, 2021 8:00:00", "background": "#f4e866" },
-    "ls": { "name": "LS", "date": "Oct 4, 2021 13:00:00", "background": "#f7c09e" },
+    "ls": { "name": "LS", "date": "Oct 4, 2021 13:00:00" },
 }
 
 let expanded = false;
