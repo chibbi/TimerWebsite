@@ -12,6 +12,10 @@ const timerList = {
     "gb": { "name": "GB", "date": "Jul 4, 2021 1:00:00", "background": "#d9a6db" },
     "as": { "name": "AS", "date": "Sep 6, 2021 8:00:00", "background": "#f4e866" },
     "ls": { "name": "LS", "date": "Oct 4, 2021 13:00:00" },
+    "swt": { "name": "SWT", "date": "Jul 29, 2021 9:00:00", "background": "rgb(149, 165, 244)" },
+    "algo": { "name": "Algo", "date": "Sep 2, 2021 9:00:00", "background": "rgb(149, 165, 244)" },
+    "hm": { "name": "HM", "date": "Sep 14, 2021 9:00:00", "background": "rgb(149, 165, 244)" },
+    "la": { "name": "LA", "date": "Sep 24, 2021 9:00:00", "background": "rgb(149, 165, 244)" },
 }
 
 let expanded = false;
