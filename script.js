@@ -8,8 +8,6 @@ const timerList = {
     //"e": { "name": "Englisch", "date": "May 10, 2021 9:00:00", "background": "#f7c09e" },
     //"ch": { "name": "Chemie", "date": "May 11, 2021 9:00:00", "background": "#f4e866" },
     //"m": { "name": "Mathe", "date": "May 17, 2021 9:00:00", "background": "#f4705f" },
-    "it": { "name": "IT", "date": "Jun 29, 2021 11:30:00", "background": "#a29fcc" },
-    "gb": { "name": "GB", "date": "Jul 4, 2021 1:00:00", "background": "#d9a6db" },
     "as": { "name": "AS", "date": "Sep 6, 2021 8:00:00", "background": "#f4e866" },
     "ls": { "name": "LS", "date": "Oct 4, 2021 13:00:00" },
     "swt": { "name": "SWT", "date": "Jul 29, 2021 9:00:00", "background": "rgb(149, 165, 244)" },
