@@ -8,12 +8,13 @@ const timerList = {
     //"e": { "name": "Englisch", "date": "May 10, 2021 9:00:00", "background": "#f7c09e" },
     //"ch": { "name": "Chemie", "date": "May 11, 2021 9:00:00", "background": "#f4e866" },
     //"m": { "name": "Mathe", "date": "May 17, 2021 9:00:00", "background": "#f4705f" },
-    "as": { "name": "AS", "date": "Sep 6, 2021 8:00:00", "background": "#f4e866" },
-    "ls": { "name": "LS", "date": "Oct 4, 2021 13:00:00" },
-    "swt": { "name": "SWT", "date": "Jul 29, 2021 9:00:00", "background": "rgb(149, 165, 244)" },
-    "algo": { "name": "Algo", "date": "Sep 2, 2021 9:00:00", "background": "rgb(149, 165, 244)" },
-    "hm": { "name": "HM", "date": "Sep 14, 2021 9:00:00", "background": "rgb(149, 165, 244)" },
-    "la": { "name": "LA", "date": "Sep 24, 2021 9:00:00", "background": "rgb(149, 165, 244)" },
+    
+    "ti": { "name": "TI", "date": "Dez 21, 2021 13:00:00", "background": "#f4e866" },
+    "we": { "name": "W-/A-E", "date": "Dez 20, 2021 15:30:00" },
+    //"swt": { "name": "SWT", "date": "Jul 29, 2021 9:00:00", "background": "rgb(149, 165, 244)" },
+    //"algo": { "name": "Algo", "date": "Sep 2, 2021 9:00:00", "background": "rgb(149, 165, 244)" },
+    //"hm": { "name": "HM", "date": "Sep 21, 2021 9:00:00", "background": "rgb(149, 165, 244)" },
+    "la": { "name": "LA", "date": "Dez 22, 2021 14:30:00", "background": "rgb(149, 165, 244)" },
 }
 
 let expanded = false;
