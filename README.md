@@ -12,4 +12,15 @@
   -->
 </p>
 <h1> Website with Timers </h1>
-<strong>maintained</strong>
+<p><strong>maintained</strong>
+  <br>
+  This Project originated from me wanting to have an Overview how much time i have left for my final exams.
+  After those, i realised, that the Website would be far more helpful if other People could add their own Timers too.
+  <br>
+  Now this is implemented, and because i use github-pages as my hosting provider, all of the information about the Timers is saved locally.
+  This is an advantage in terms of security and privacy, but it is a disadvantage in terms of usefulness, because if it was not completly locally,
+  i could create a timer on my phone and look at it on my computer. this is currently not possible.
+  <br>
+  i may add the possibility to sync devices, but this was (and still is) supposed to be a very simple small project. Syncing devices would not fit in this description,
+  but if i have too much free time, i may add that functionality.
+</p>
