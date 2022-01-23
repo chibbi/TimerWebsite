@@ -52,7 +52,7 @@ function countDown(timer, timerID) {
     const counterName = timer.name;
     const countdownsdiv = document.getElementById("countdowns");
     countdownsdiv.innerHTML += '<div class="cdc" id="' + timerID + 'c">' +
-        '<p class="cdt">' + counterName + ' Prüfung in:</p>' +
+        '<p class="cdt">' + counterName + ' in:</p>' +
         '<p class="cd" id="' + timerID + '"></p>' +
         '<input type="button" value="Delete Countdown"' +
         'onclick="removeCountdown(\'' + timerID + '\')" id="rm' + timerID + '" />' +
