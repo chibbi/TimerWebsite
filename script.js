@@ -1,46 +1,25 @@
 // written by chibbi
 const red = "white";
 const green = "#8FBC8F";
-const timerList = {
-    //"d": { "name": "Deutsch", "date": "May 4, 2021 9:00:00", "background": "rgb(149, 165, 244)" },
-    //"w": { "name": "Wirtschaft", "date": "May 6, 2021 9:00:00", "background": "#a29fcc" },
-    //"ph": { "name": "Physik", "date": "May 7, 2021 9:00:00", "background": "#d9a6db" },
-    //"e": { "name": "Englisch", "date": "May 10, 2021 9:00:00", "background": "#f7c09e" },
-    //"ch": { "name": "Chemie", "date": "May 11, 2021 9:00:00", "background": "#f4e866" },
-    //"m": { "name": "Mathe", "date": "May 17, 2021 9:00:00", "background": "#f4705f" },
-    
-    "ti": { "name": "TI", "date": "Dez 21, 2021 13:00:00", "background": "#f4e866" },
-    "we": { "name": "W-/A-E", "date": "Dez 20, 2021 15:30:00" },
-    //"swt": { "name": "SWT", "date": "Jul 29, 2021 9:00:00", "background": "rgb(149, 165, 244)" },
-    //"algo": { "name": "Algo", "date": "Sep 2, 2021 9:00:00", "background": "rgb(149, 165, 244)" },
-    //"hm": { "name": "HM", "date": "Sep 21, 2021 9:00:00", "background": "rgb(149, 165, 244)" },
-    "la": { "name": "LA", "date": "Dez 22, 2021 14:30:00", "background": "rgb(149, 165, 244)" },
-}
 
-let expanded = false;
-function showCheckboxes() {
-    const checkboxes = document.getElementById("checkboxes");
-    if (!expanded) {
-        checkboxes.style.display = "flex";
-        expanded = true;
-    } else {
-        checkboxes.style.display = "none";
-        expanded = false;
-    }
+function containsTimerList(cookie) {
+    return cookie.includes("timerlist")
 }
 
 function loadCountdowns() {
-    // creates the countdown for every timer
-    for (const time in timerList)
-        countDown(time);
+    const list = JSON.parse(document.cookie.split(";").find(containsTimerList).replace("timerlist=", ""));
+    for (const timerID in list) {
+        countDown(list[timerID], timerID);
+    }
 
 }
 
 
 function loadCheckboxes() {
     // this section loads every cookie for every timer
-    for (const id in timerList)
-        loadCheckbox(id);
+    const list = JSON.parse(document.cookie.split(";").find(containsTimerList).replace("timerlist=", ""));
+    for (const timerID in list)
+        loadCheckbox(timerID);
 }
 
 function loadCheckbox(visibilityBoxName) {
@@ -63,7 +42,58 @@ function loadCheckbox(visibilityBoxName) {
     }
 }
 
-function checkVisibility(counterName) {
+function countDown(timer, timerID) {
+    const countDownDate = new Date(timer.date).getTime();
+    const counterName = timer.name;
+    const countdownsdiv = document.getElementById("countdowns");
+    countdownsdiv.innerHTML += '<div class="cdc" id="' + timerID + 'c">' +
+        '<p class="cdt">' + counterName + ' Prüfung in:</p>' +
+        '<p class="cd" id="' + timerID + '"></p>' +
+        '<input type="button" value="Delete Countdown"' +
+        'onclick="removeCountdown(\'' + timerID + '\')" id="rm' + timerID + '" />' +
+        '</div>';
+    const checkboxesdiv = document.getElementById("checkboxes");
+    checkboxesdiv.innerHTML += '<input type="button" value="' + timerID + '"' +
+        'onclick="toggleVisibility(\'' + timerID + '\')" id="vi' + timerID + '" />';
+    // Update the count down every 1 second
+    const countdownInterval = setInterval(function () {
+        // Get current date and time
+        const then = new Date(countDownDate);
+        const duration = countDownDate - new Date().getTime();
+        const durationDate = new Date(duration);
+        // If Timer does not exist any more, delete it:
+        if (document.getElementById(timerID) == null) {
+              clearInterval(countdownInterval);
+        } // If the countdown is over, show it
+        else if (duration < 0) {
+            clearInterval(countdownInterval);
+            document.getElementById(timerID).textContent = "----------";
+        } else {
+            // Output the result in an element with id=textID
+            document.getElementById(timerID).textContent =
+                ((duration / (1000 * 60 * 60 * 24))).toString().split(".")[0] + " Tage, " +
+                (durationDate.getHours() - 1) + " Stunden, " + // TODO: find out where this extra hour comes from
+                durationDate.getMinutes() + " Minuten, " +
+                durationDate.getSeconds() + " Sekunden " + " - (" +
+                then.toLocaleString() + ")";
+        }
+       }, 500);
+    document.getElementById(timerID + "c").style.backgroundColor = timer.background;
+}
+
+let expanded = false;
+function showCheckboxes() {
+    const checkboxes = document.getElementById("checkboxes");
+    if (!expanded) {
+        checkboxes.style.display = "flex";
+        expanded = true;
+    } else {
+        checkboxes.style.display = "none";
+        expanded = false;
+    }
+}
+
+function toggleVisibility(counterName) {
     // Checks if the given Text and Counter should be visible
     const buttonID = "vi" + counterName;
     const counterID = counterName + "c";
@@ -79,49 +109,34 @@ function checkVisibility(counterName) {
         document.cookie = "checkBox_" + counterID + "=false;expires=Mon, 04 Jul 2022 22:44:25 UTC";
     }
 }
-
-function countDown(counterID) {
-    const countDownDate = new Date(timerList[counterID].date).getTime();
-    const counterName = timerList[counterID].name;
-    const contentdiv = document.getElementById("content");
-    contentdiv.innerHTML += '<div class="cdc" id="' + counterID + 'c">' +
-        '<p class="cdt">' + counterName + ' Prüfung in:</p>' +
-        '<p class="cd" id="' + counterID + '"></p>' +
-        '</div>';
-    const checkboxesdiv = document.getElementById("checkboxes");
-    checkboxesdiv.innerHTML += '<input type="button" value="' + counterID + '"' +
-        'onclick="checkVisibility(\'' + counterID + '\')" id="vi' + counterID + '" />';
-    // Update the count down every 1 second
-    const x = setInterval(function () {
-        // Get current date and time
-        var now = new Date().getTime();
-        var then = new Date(countDownDate);
-        var duration = countDownDate - now;
-        var durationDate = new Date(duration);
-        // Output the result in an element with id=textID
-        document.getElementById(counterID).textContent =
-            ((duration / (1000 * 60 * 60 * 24))).toString().split(".")[0] + " Tage, " +
-            (durationDate.getHours() - 1) + " Stunden, " +
-            durationDate.getMinutes() + " Minuten, " +
-            durationDate.getSeconds() + " Sekunden " + " - (" +
-            then.getDate() + "." +
-            (then.getMonth() + 1) + "." +
-            then.getFullYear() + " " +
-            (then.getHours() < 10 ? '0' : '') + then.getHours() + ":" +
-            (then.getMinutes() < 10 ? '0' : '') + then.getMinutes() + ")";
-
-        // If the countdown is over, show it
-        if (duration < 0) {
-            clearInterval(x);
-            document.getElementById(counterID).textContent = "Prüfungstart war bereits.";
-        }
-    }, 500);
-    document.getElementById(counterID + "c").style.backgroundColor = timerList[counterID].background;
+function debug() {
+    const timerList = {
+        "d": { "name": "Deutsch", "date": "May 4, 2022 10:00:00", "background": "rgb(149, 165, 244)" },
+        "w": { "name": "Wirtschaft", "date": "May 6, 2022 10:00:00", "background": "#a29fcc" },
+        "test": {"name": "testii", "date": new Date(new Date().setMinutes(new Date().getMinutes()+3000)), "background": "rgb(234,54,43)"}
+    };
+    document.cookie = "timerlist=" + JSON.stringify(timerList) + ";expires="+new Date(new Date().setFullYear(new Date().getFullYear()+1)).toLocaleString();
+}
+debug()
+function addCountdown(name = "Temp", endTime = new Date(new Date().setFullYear(new Date().getFullYear())), backgroundColor = "rgb(255,50,50)") {
+    // TODO: trigger error if countdown already exists
+    let list = JSON.parse(document.cookie.split(";").find(containsTimerList).replace("timerlist=", ""));
+    list[name] = {"name":name,"date":endTime,"background":backgroundColor};
+    document.cookie = "timerlist=" + JSON.stringify(list) + ";expires="+new Date(endTime.setFullYear(endTime.getFullYear()+1)).toUTCString();
+    countDown(list[name], name);
 }
 
-// How to create new Dates:
-// 1. create a new Object in "timerList" // line 4
+function changeCountdown(name = "Temp", endTime = new Date(new Date().setFullYear(new Date().getFullYear()+1)), backgroundColor = "rgb(255,50,50)") {
+    // TODO: trigger error if countdown does not exist
+    // this is the easiest solution
+    removeCountdown(name);
+    addCountdown(name, endTime, backgroundColor);
+}
 
-// How to change from one Abi to the next
-// 1. Change every Date for every Prüfung to the new Date
-// 2. Maybe change/increase ExpiringDate
+function removeCountdown(timerID = "Temp") {
+    let list = JSON.parse(document.cookie.split(";").find(containsTimerList).replace("timerlist=", ""));
+    delete list[timerID];
+    document.cookie = "timerlist=" + JSON.stringify(list) + ";expires="+new Date(new Date().setFullYear(new Date().getFullYear()+1)).toUTCString();
+    document.getElementById(timerID + "c").remove();
+    document.getElementById("vi" + timerID).remove();
+}
