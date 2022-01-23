@@ -3,21 +3,26 @@ const red = "white";
 const green = "#8FBC8F";
 
 function containsTimerList(cookie) {
-    return cookie.includes("timerlist")
+    return cookie.includes("timerlist");
+}
+
+function getTimerList() {
+    if (document.cookie.split(";").find(containsTimerList) == undefined || document.cookie.split(";").find(containsTimerList) == null) {
+        return "{}";
+    }
+    return document.cookie.split(";").find(containsTimerList).replace("timerlist=", "");
 }
 
 function loadCountdowns() {
-    const list = JSON.parse(document.cookie.split(";").find(containsTimerList).replace("timerlist=", ""));
+    const list = JSON.parse(getTimerList());
     for (const timerID in list) {
         countDown(list[timerID], timerID);
     }
-
 }
-
 
 function loadCheckboxes() {
     // this section loads every cookie for every timer
-    const list = JSON.parse(document.cookie.split(";").find(containsTimerList).replace("timerlist=", ""));
+    const list = JSON.parse(getTimerList());
     for (const timerID in list)
         loadCheckbox(timerID);
 }
@@ -54,7 +59,7 @@ function countDown(timer, timerID) {
         '</div>';
     const checkboxesdiv = document.getElementById("checkboxes");
     checkboxesdiv.innerHTML += '<input type="button" value="' + timerID + '"' +
-        'onclick="toggleVisibility(\'' + timerID + '\')" id="vi' + timerID + '" />';
+        'onclick="toggleVisibility(\'' + timerID + '\')" id="vi' + timerID + '" style="background-color: rgb(143, 188, 143);"/>';
     // Update the count down every 1 second
     const countdownInterval = setInterval(function () {
         // Get current date and time
@@ -79,6 +84,48 @@ function countDown(timer, timerID) {
         }
        }, 500);
     document.getElementById(timerID + "c").style.backgroundColor = timer.background;
+}
+
+function addCountdown(backgroundColor, name, endTime) {
+    // TODO: trigger error if countdown already exists
+    endTime = new Date(endTime)
+    let list = JSON.parse(getTimerList());
+    if(list[name] != null) {
+        return;
+    }
+    list[name] = {"name":name,"date":endTime,"background":backgroundColor};
+    document.cookie = "timerlist=" + JSON.stringify(list) + ";expires="+new Date(endTime.setFullYear(endTime.getFullYear()+1)).toUTCString();
+    // TODO:/FIXME: HOW AND WHY is
+    // list[name]
+    // NOT EQUAL TO
+    // JSON.parse(getTimerList())[name]
+    countDown(JSON.parse(getTimerList())[name], name);
+}
+
+function changeCountdown(backgroundColor, name, endTime) {
+    // TODO: trigger error if countdown does not exist
+    // this is the easiest solution
+    removeCountdown(name);
+    addCountdown(backgroundColor, name, endTime);
+}
+
+function removeCountdown(timerID = "Temp") {
+    let list = JSON.parse(getTimerList());
+    delete list[timerID];
+    document.cookie = "timerlist=" + JSON.stringify(list) + ";expires="+new Date(new Date().setFullYear(new Date().getFullYear()+1)).toUTCString();
+    document.getElementById(timerID + "c").remove();
+    document.getElementById("vi" + timerID).remove();
+}
+
+function addTimerViaInputs() {
+    // TODO: trigger error if something is not filled out
+    const name = document.getElementById("timername").value;
+    const date = document.getElementById("timerdate").value;
+    const color = document.getElementById("timercolor").value;
+    if(name == "") 
+        addCountdown(color, "Temp", new Date(new Date().setMinutes(new Date().getMinutes()+30)))
+    else 
+        addCountdown(color, name, new Date(new Date().setMinutes(new Date().getMinutes()+30)))
 }
 
 let expanded = false;
@@ -109,6 +156,7 @@ function toggleVisibility(counterName) {
         document.cookie = "checkBox_" + counterID + "=false;expires=Mon, 04 Jul 2022 22:44:25 UTC";
     }
 }
+
 function debug() {
     const timerList = {
         "d": { "name": "Deutsch", "date": "May 4, 2022 10:00:00", "background": "rgb(149, 165, 244)" },
@@ -116,27 +164,4 @@ function debug() {
         "test": {"name": "testii", "date": new Date(new Date().setMinutes(new Date().getMinutes()+3000)), "background": "rgb(234,54,43)"}
     };
     document.cookie = "timerlist=" + JSON.stringify(timerList) + ";expires="+new Date(new Date().setFullYear(new Date().getFullYear()+1)).toLocaleString();
-}
-debug()
-function addCountdown(name = "Temp", endTime = new Date(new Date().setFullYear(new Date().getFullYear())), backgroundColor = "rgb(255,50,50)") {
-    // TODO: trigger error if countdown already exists
-    let list = JSON.parse(document.cookie.split(";").find(containsTimerList).replace("timerlist=", ""));
-    list[name] = {"name":name,"date":endTime,"background":backgroundColor};
-    document.cookie = "timerlist=" + JSON.stringify(list) + ";expires="+new Date(endTime.setFullYear(endTime.getFullYear()+1)).toUTCString();
-    countDown(list[name], name);
-}
-
-function changeCountdown(name = "Temp", endTime = new Date(new Date().setFullYear(new Date().getFullYear()+1)), backgroundColor = "rgb(255,50,50)") {
-    // TODO: trigger error if countdown does not exist
-    // this is the easiest solution
-    removeCountdown(name);
-    addCountdown(name, endTime, backgroundColor);
-}
-
-function removeCountdown(timerID = "Temp") {
-    let list = JSON.parse(document.cookie.split(";").find(containsTimerList).replace("timerlist=", ""));
-    delete list[timerID];
-    document.cookie = "timerlist=" + JSON.stringify(list) + ";expires="+new Date(new Date().setFullYear(new Date().getFullYear()+1)).toUTCString();
-    document.getElementById(timerID + "c").remove();
-    document.getElementById("vi" + timerID).remove();
 }

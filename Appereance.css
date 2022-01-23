@@ -16,9 +16,11 @@ pre {
 p {
   text-align: left;
   font-size: 28px;
+}
+
+p, label, input {
   margin-top: 3px;
   margin-bottom: 5px;
-
 }
 
 /* Content der Seite */
@@ -36,7 +38,10 @@ p {
   border: 3px solid rgb(97, 88, 88);
 }
 
-
+/* Countdown Creator Box */
+#countdowncreator {
+  font-size: 28px;
+}
 
 /* DropDown CheckBox */
 .multiselect {
