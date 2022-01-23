@@ -123,9 +123,9 @@ function addTimerViaInputs() {
     const date = document.getElementById("timerdate").value;
     const color = document.getElementById("timercolor").value;
     if(name == "") 
-        addCountdown(color, "Temp", new Date(new Date().setMinutes(new Date().getMinutes()+30)))
+        addCountdown(color, "Temp", new Date(date)
     else 
-        addCountdown(color, name, new Date(new Date().setMinutes(new Date().getMinutes()+30)))
+        addCountdown(color, name, new Date(date)
 }
 
 let expanded = false;
