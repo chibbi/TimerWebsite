@@ -66,9 +66,12 @@ function countDown(timer, timerID) {
         const then = new Date(countDownDate);
         const duration = countDownDate - new Date().getTime();
         const durationDate = new Date(duration);
+        console.log(duration);
+        console.log((duration / (1000 * 60 * 60 * 24)));
+        console.log(((duration / (1000 * 60 * 60 * 24)) % 1 ));
         // If Timer does not exist any more, delete it:
         if (document.getElementById(timerID) == null) {
-              clearInterval(countdownInterval);
+            clearInterval(countdownInterval);
         } // If the countdown is over, show it
         else if (duration < 0) {
             clearInterval(countdownInterval);
@@ -77,12 +80,12 @@ function countDown(timer, timerID) {
             // Output the result in an element with id=textID
             document.getElementById(timerID).textContent =
                 ((duration / (1000 * 60 * 60 * 24))).toString().split(".")[0] + " Tage, " +
-                (durationDate.getHours() - 1) + " Stunden, " + // TODO: find out where this extra hour comes from
+                (((duration / (1000 * 60 * 60 * 24)) % 1 ) * 24).toString().split(".")[0] + " Stunden, " +
                 durationDate.getMinutes() + " Minuten, " +
                 durationDate.getSeconds() + " Sekunden " + " - (" +
                 then.toLocaleString() + ")";
         }
-       }, 500);
+    }, 500);
     document.getElementById(timerID + "c").style.backgroundColor = timer.background;
 }
 
@@ -90,11 +93,11 @@ function addCountdown(backgroundColor, name, endTime) {
     // TODO: trigger error if countdown already exists
     endTime = new Date(endTime)
     let list = JSON.parse(getTimerList());
-    if(list[name] != null) {
+    if (list[name] != null) {
         return;
     }
-    list[name] = {"name":name,"date":endTime,"background":backgroundColor};
-    document.cookie = "timerlist=" + JSON.stringify(list) + ";expires="+new Date(endTime.setFullYear(endTime.getFullYear()+1)).toUTCString();
+    list[name] = { "name": name, "date": endTime, "background": backgroundColor };
+    document.cookie = "timerlist=" + JSON.stringify(list) + ";expires=" + new Date(endTime.setFullYear(endTime.getFullYear() + 1)).toUTCString();
     // TODO:/FIXME: HOW AND WHY is
     // list[name]
     // NOT EQUAL TO
@@ -112,7 +115,7 @@ function changeCountdown(backgroundColor, name, endTime) {
 function removeCountdown(timerID = "Temp") {
     let list = JSON.parse(getTimerList());
     delete list[timerID];
-    document.cookie = "timerlist=" + JSON.stringify(list) + ";expires="+new Date(new Date().setFullYear(new Date().getFullYear()+1)).toUTCString();
+    document.cookie = "timerlist=" + JSON.stringify(list) + ";expires=" + new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toUTCString();
     document.getElementById(timerID + "c").remove();
     document.getElementById("vi" + timerID).remove();
 }
@@ -122,10 +125,11 @@ function addTimerViaInputs() {
     const name = document.getElementById("timername").value;
     const date = document.getElementById("timerdate").value;
     const color = document.getElementById("timercolor").value;
-    if(name == "") 
-        addCountdown(color, "Temp", new Date(date)
-    else 
-        addCountdown(color, name, new Date(date)
+    if (name == "") {
+        addCountdown(color, "Temp", new Date(date));
+    } else {
+        addCountdown(color, name, new Date(date));
+    }
 }
 
 let expanded = false;
@@ -161,7 +165,7 @@ function debug() {
     const timerList = {
         "d": { "name": "Deutsch", "date": "May 4, 2022 10:00:00", "background": "rgb(149, 165, 244)" },
         "w": { "name": "Wirtschaft", "date": "May 6, 2022 10:00:00", "background": "#a29fcc" },
-        "test": {"name": "testii", "date": new Date(new Date().setMinutes(new Date().getMinutes()+3000)), "background": "rgb(234,54,43)"}
+        "test": { "name": "testii", "date": new Date(new Date().setMinutes(new Date().getMinutes() + 3000)), "background": "rgb(234,54,43)" }
     };
-    document.cookie = "timerlist=" + JSON.stringify(timerList) + ";expires="+new Date(new Date().setFullYear(new Date().getFullYear()+1)).toLocaleString();
+    document.cookie = "timerlist=" + JSON.stringify(timerList) + ";expires=" + new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toLocaleString();
 }
